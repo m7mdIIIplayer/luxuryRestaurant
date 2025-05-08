@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رحلة حسية - A Sensory Voyage</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#D4AF37',secondary:'#1A1A1A'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #0A0A0A;
+            color: #FFFFFF;
+        }
+        .title-font {
+            font-family: 'Amiri', serif;
+        }
+        .menu-item:hover .menu-overlay {
+            opacity: 1;
+        }
+        .menu-item:hover img {
+            transform: scale(1.05);
+        }
+        .table-map .table {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .table-map .table:hover {
+            filter: brightness(1.2);
+            transform: translateY(-2px);
+        }
+        .table-map .table.selected {
+            filter: brightness(1.5);
+            border: 2px solid #D4AF37;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #D4AF37;
+            cursor: pointer;
+        }
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        .audio-control::-webkit-media-controls-panel {
+            background-color: rgba(26, 26, 26, 0.7);
+        }
+        .audio-control::-webkit-media-controls-play-button {
+            background-color: #D4AF37;
+            border-radius: 50%;
+        }
+        .audio-control::-webkit-media-controls-volume-slider {
+            background-color: #D4AF37;
+            border-radius: 25px;
+            padding: 0 5px;
+        }
+        .book-page {
+            transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transform-origin: center left;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .page-turn {
+            transform: rotateY(-180deg);
+        }
+        input[type="date"], input[type="time"], select {
+            background-color: #1A1A1A;
+            color: white;
+            border: 1px solid #333;
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+        .custom-checkbox {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .checkmark {
+            height: 22px;
+            width: 22px;
+            background-color: #1A1A1A;
+            border: 1px solid #444;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .custom-checkbox input:checked ~ .checkmark {
+            background-color: #D4AF37;
+            border-color: #D4AF37;
+        }
+        .checkmark:after {
+            content: "";
+            display: none;
+        }
+        .custom-checkbox input:checked ~ .checkmark:after {
+            display: block;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        .custom-radio {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .custom-radio input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .radiomark {
+            height: 22px;
+            width: 22px;
+            background-color: #1A1A1A;
+            border: 1px solid #444;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .custom-radio input:checked ~ .radiomark {
+            background-color: #1A1A1A;
+            border-color: #D4AF37;
+        }
+        .radiomark:after {
+            content: "";
+            display: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #D4AF37;
+        }
+        .custom-radio input:checked ~ .radiomark:after {
+            display: block;
+        }
+        .custom-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        .custom-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #1A1A1A;
+            transition: .4s;
+            border-radius: 24px;
+            border: 1px solid #444;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #D4AF37;
+            border-color: #D4AF37;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #D4AF37;
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Audio Background -->
+    <audio id="backgroundMusic" loop class="audio-control hidden">
+        <source src="#" type="audio/mpeg">
+    </audio>
+
+    <!-- Intro Animation Overlay -->
+    <div id="introOverlay" class="fixed inset-0 bg-black z-50 flex items-center justify-center">
+        <div class="relative w-full max-w-4xl h-96">
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                <h1 class="font-['Pacifico'] text-primary text-6xl mb-8">logo</h1>
+                <h2 class="title-font text-3xl mb-8 text-white">رحلة حسية - A Sensory Voyage</h2>
+                <button id="startJourneyBtn" class="bg-primary text-black py-3 px-8 rounded-button text-lg font-bold hover:bg-opacity-90 transition-all">ابدأ الرحلة</button>
+            </div>
+            <div class="absolute bottom-8 left-0 right-0 flex justify-center">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <span class="text-white text-sm">الموسيقى</span>
+                    <label class="custom-switch">
+                        <input type="checkbox" id="musicToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-40 bg-black bg-opacity-90 backdrop-blur-md">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="font-['Pacifico'] text-primary text-3xl">logo</a>
+                <div class="hidden md:flex space-x-8 space-x-reverse">
+                    <a href="#home" class="nav-link text-white hover:text-primary transition-colors py-2">الرئيسية</a>
+                    <a href="#menu" class="nav-link text-white hover:text-primary transition-colors py-2">القائمة</a>
+                    <a href="#reservation" class="nav-link text-white hover:text-primary transition-colors py-2">الحجز</a>
+                    <a href="#gallery" class="nav-link text-white hover:text-primary transition-colors py-2">معرض الصور</a>
+                    <a href="#story" class="nav-link text-white hover:text-primary transition-colors py-2">قصتنا</a>
+                </div>
+                <button id="reserveNowBtn" class="bg-primary text-black py-2 px-6 rounded-button font-bold hover:bg-opacity-90 transition-all">احجز الآن</button>
+                <button id="mobileMenuBtn" class="md:hidden w-10 h-10 flex items-center justify-center">
+                    <i class="ri-menu-line text-white ri-2x"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed inset-0 bg-black bg-opacity-95 z-40 hidden flex-col items-center justify-center">
+        <button id="closeMenuBtn" class="absolute top-6 right-6 w-10 h-10 flex items-center justify-center">
+            <i class="ri-close-line text-white ri-2x"></i>
+        </button>
+        <div class="flex flex-col space-y-6 items-center">
+            <a href="#home" class="text-white text-2xl hover:text-primary transition-colors">الرئيسية</a>
+            <a href="#menu" class="text-white text-2xl hover:text-primary transition-colors">القائمة</a>
+            <a href="#reservation" class="text-white text-2xl hover:text-primary transition-colors">الحجز</a>
+            <a href="#gallery" class="text-white text-2xl hover:text-primary transition-colors">معرض الصور</a>
+            <a href="#story" class="text-white text-2xl hover:text-primary transition-colors">قصتنا</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen relative flex items-center justify-center pt-20" style="background-image: url('https://readdy.ai/api/search-image?query=Luxurious%20restaurant%20table%20setting%20with%20elegant%20plates%2C%20crystal%20glasses%2C%20golden%20cutlery%2C%20and%20soft%20ambient%20lighting.%20The%20image%20should%20have%20a%20dark%20background%20with%20dramatic%20lighting%20highlighting%20the%20table%20setting%2C%20creating%20an%20atmosphere%20of%20sophistication%20and%20exclusivity.%20The%20composition%20should%20be%20from%20above%2C%20looking%20down%20at%20a%20perfectly%20arranged%20dining%20table.&width=1600&height=900&seq=1&orientation=landscape'); background-size: cover; background-position: center;">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div class="container mx-auto px-6 z-10">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 text-center md:text-right">
+                    <h1 class="title-font text-5xl md:text-6xl mb-6 text-white leading-tight">رحلة <span class="text-primary">حسية</span> عبر عالم الطهي</h1>
+                    <p class="text-xl mb-8 text-gray-200 max-w-lg mx-auto md:mr-0">ليست مجرد وجبة، بل تجربة فريدة تخاطب حواسك الخمس. دع طعامنا يأخذك في رحلة استثنائية من النكهات والروائح والألوان.</p>
+                    <div class="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4 sm:space-x-reverse">
+                        <a href="#menu" class="bg-primary text-black py-3 px-8 rounded-button text-lg font-bold hover:bg-opacity-90 transition-all whitespace-nowrap">استكشف القائمة</a>
+                        <a href="#reservation" class="border-2 border-white text-white py-3 px-8 rounded-button text-lg font-bold hover:bg-white hover:bg-opacity-10 transition-all whitespace-nowrap">احجز طاولة</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 mt-12 md:mt-0">
+                    <!-- Placeholder for animation -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="py-20 bg-black">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="title-font text-4xl md:text-5xl text-white mb-4">قائمة <span class="text-primary">الطعام</span></h2>
+                <p class="text-gray-300 max-w-2xl mx-auto">تصنيف فريد لأطباقنا حسب النكهات والإحساس، استكشف عالماً من المذاقات المبتكرة التي صممها كبار الطهاة لدينا.</p>
+            </div>
+
+            <!-- Menu Categories -->
+            <div class="flex justify-center mb-12 overflow-x-auto pb-4">
+                <div class="flex bg-gray-900 rounded-full p-1">
+                    <button class="menu-category-btn bg-primary text-black py-2 px-6 rounded-full text-sm font-bold whitespace-nowrap">نكهات أرضية</button>
+                    <button class="menu-category-btn text-white py-2 px-6 rounded-full text-sm font-bold hover:bg-gray-800 transition-all whitespace-nowrap">لمسة البحر</button>
+                    <button class="menu-category-btn text-white py-2 px-6 rounded-full text-sm font-bold hover:bg-gray-800 transition-all whitespace-nowrap">أطباق حارة</button>
+                    <button class="menu-category-btn text-white py-2 px-6 rounded-full text-sm font-bold hover:bg-gray-800 transition-all whitespace-nowrap">حلويات فاخرة</button>
+                </div>
+            </div>
+
+            <!-- Menu Items -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Menu Item 1 -->
+                <div class="menu-item bg-gray-900 rounded-lg overflow-hidden group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://readdy.ai/api/search-image?query=Gourmet%20lamb%20dish%20with%20rosemary%20and%20earthy%20spices%20on%20a%20dark%20elegant%20plate.%20The%20meat%20is%20perfectly%20cooked%20with%20a%20beautiful%20sear%2C%20accompanied%20by%20roasted%20root%20vegetables%20and%20a%20rich%20reduction%20sauce.%20The%20presentation%20is%20artistic%20and%20sophisticated%2C%20with%20microgreens%20garnish.%20Shot%20from%20above%20with%20dramatic%20lighting%20on%20a%20dark%20background.&width=600&height=400&seq=2&orientation=landscape" alt="لحم ضأن بالأعشاب البرية" class="w-full h-full object-cover object-top transition-transform duration-500">
+                        <div class="menu-overlay absolute inset-0 bg-black bg-opacity-60 opacity-0 transition-opacity duration-300 flex items-center justify-center">
+                            <button class="bg-primary text-black py-2 px-6 rounded-button font-bold hover:bg-opacity-90 transition-all whitespace-nowrap">احجز هذا الطبق</button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-xl font-bold text-white">لحم ضأن بالأعشاب البرية</h3>
+                            <span class="text-primary font-bold">٣٤٥ ريال</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">لحم ضأن طري متبل بالأعشاب البرية المحلية، يقدم مع صلصة الكمأة وخضروات جذرية محمصة. نكهة أرضية غنية تعكس روح الطبيعة.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <span class="flex items-center ml-4">
+                                <i class="ri-fire-line ml-1"></i>
+                                متوسط الحرارة
+                            </span>
+                            <span class="flex items-center">
+                                <i class="ri-time-line ml-1"></i>
+                                ٤٥ دقيقة
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu Item 2 -->
+                <div class="menu-item bg-gray-900 rounded-lg overflow-hidden group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://readdy.ai/api/search-image?query=Elegant%20seafood%20dish%20featuring%20fresh%20sea%20bass%20with%20crispy%20skin%20on%20a%20bed%20of%20saffron%20risotto.%20The%20plate%20includes%20colorful%20elements%20like%20purple%20microgreens%2C%20edible%20flowers%2C%20and%20a%20light%20foam%20sauce.%20The%20composition%20is%20artistic%20and%20sophisticated%2C%20presented%20on%20a%20dark%20ceramic%20plate%20against%20a%20dark%20background%20with%20professional%20food%20photography%20lighting.&width=600&height=400&seq=3&orientation=landscape" alt="سمك القاروص بالزعفران" class="w-full h-full object-cover object-top transition-transform duration-500">
+                        <div class="menu-overlay absolute inset-0 bg-black bg-opacity-60 opacity-0 transition-opacity duration-300 flex items-center justify-center">
+                            <button class="bg-primary text-black py-2 px-6 rounded-button font-bold hover:bg-opacity-90 transition-all whitespace-nowrap">احجز هذا الطبق</button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-xl font-bold text-white">سمك القاروص بالزعفران</h3>
+                            <span class="text-primary font-bold">٣٩٠ ريال</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">فيليه سمك القاروص الطازج مطهو بدقة، يقدم على سرير من ريزوتو الزعفران مع صلصة البحر الأبيض المتوسط وزيت الأعشاب المعطر.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <span class="flex items-center ml-4">
+                                <i class="ri-leaf-line ml-1"></i>
+                                خفيف
+                            </span>
+                            <span class="flex items-center">
+                                <i class="ri-time-line ml-1"></i>
+                                ٣٥ دقيقة
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu Item 3 -->
+                <div class="menu-item bg-gray-900 rounded-lg overflow-hidden group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://readdy.ai/api/search-image?query=Luxurious%20chocolate%20dessert%20with%20multiple%20textures%20-%20a%20rich%20chocolate%20mousse%20dome%20with%20a%20glossy%20mirror%20glaze%2C%20accompanied%20by%20gold%20leaf%20decoration%2C%20chocolate%20soil%2C%20and%20raspberry%20coulis.%20The%20dessert%20is%20artistically%20plated%20on%20a%20black%20slate%20plate%20with%20elegant%20gold%20accents.%20The%20lighting%20is%20dramatic%2C%20highlighting%20the%20glossy%20surface%20of%20the%20chocolate%20against%20a%20dark%20background.&width=600&height=400&seq=4&orientation=landscape" alt="سيمفونية الشوكولاتة" class="w-full h-full object-cover object-top transition-transform duration-500">
+                        <div class="menu-overlay absolute inset-0 bg-black bg-opacity-60 opacity-0 transition-opacity duration-300 flex items-center justify-center">
+                            <button class="bg-primary text-black py-2 px-6 rounded-button font-bold hover:bg-opacity-90 transition-all whitespace-nowrap">احجز هذا الطبق</button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-xl font-bold text-white">سيمفونية الشوكولاتة</h3>
+                            <span class="text-primary font-bold">٢١٠ ريال</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">تجربة متعددة الطبقات من الشوكولاتة الفاخرة، تجمع بين الموس الحريري، والكراميل المملح، وبسكويت اللوز المقرمش، مع لمسة من ورق الذهب.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <span class="flex items-center ml-4">
+                                <i class="ri-award-line ml-1"></i>
+                                طبق مميز
+                            </span>
+                            <span class="flex items-center">
+                                <i class="ri-heart-line ml-1"></i>
+                                الأكثر طلباً
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu Item 4 -->
+                <div class="menu-item bg-gray-900 rounded-lg overflow-hidden group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://readdy.ai/api/search-image?query=Elegant%20spicy%20dish%20featuring%20perfectly%20seared%20scallops%20with%20a%20vibrant%20red%20chili%20sauce.%20The%20plate%20includes%20artistic%20elements%20like%20microgreens%2C%20edible%20flowers%2C%20and%20delicate%20sauce%20drizzles.%20The%20composition%20shows%20three%20large%20scallops%20arranged%20in%20a%20triangular%20pattern%20on%20a%20modern%20black%20ceramic%20plate%20against%20a%20dark%20background%20with%20professional%20food%20photography%20lighting.&width=600&height=400&seq=5&orientation=landscape" alt="إسكالوب البحر الحار" class="w-full h-full object-cover object-top transition-transform duration-500">
+                        <div class="menu-overlay absolute inset-0 bg-black bg-opacity-60 opacity-0 transition-opacity duration-300 flex items-center justify-center">
+                            <button class="bg-primary text-black py-2 px-6 rounded-button font-bold hover:bg-opacity-90 transition-all whitespace-nowrap">احجز هذا الطبق</button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-xl font-bold text-white">إسكالوب البحر الحار</h3>
+                            <span class="text-primary font-bold">٣٦٥ ريال</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">إسكالوب بحري طازج محمر بإتقان، يقدم مع صلصة الفلفل الحار المدخن وبوريه الذرة الحلوة، مع لمسة من زيت الليمون المعطر.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <span class="flex items-center ml-4">
+                                <i class="ri-fire-fill ml-1"></i>
+                                حار
+                            </span>
+                            <span class="flex items-center">
+                                <i class="ri-time-line ml-1"></i>
+                                ٢٥ دقيقة
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu Item 5 -->
+                <div class="menu-item bg-gray-900 rounded-lg overflow-hidden group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://readdy.ai/api/search-image?query=Luxurious%20beef%20tenderloin%20dish%20with%20truffle%20sauce%20on%20an%20elegant%20black%20plate.%20The%20meat%20is%20perfectly%20cooked%20medium-rare%20with%20a%20beautiful%20sear%2C%20accompanied%20by%20artistic%20vegetable%20garnishes%20and%20microgreens.%20The%20composition%20is%20sophisticated%20with%20dramatic%20lighting%20highlighting%20the%20dish%20against%20a%20dark%20background%2C%20creating%20an%20atmosphere%20of%20high-end%20dining.&width=600&height=400&seq=6&orientation=landscape" alt="تندرلوين بصلصة الكمأة" class="w-full h-full object-cover object-top transition-transform duration-500">
+                        <div class="menu-overlay absolute inset-0 bg-black bg-opacity-60 opacity-0 transition-opacity duration-300 flex items-center justify-center">
+                            <button class="bg-primary text-black py-2 px-6 rounded-button font-bold hover:bg-opacity-90 transition-all whitespace-nowrap">احجز هذا الطبق</button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-xl font-bold text-white">تندرلوين بصلصة الكمأة</h3>
+                            <span class="text-primary font-bold">٤٢٠ ريال</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">شرائح لحم التندرلوين المشوية على درجة النضج المتوسطة، تقدم مع صلصة الكمأة السوداء الفاخرة وبطاطس الهاسلباك المقرمشة.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <span class="flex items-center ml-4">
+                                <i class="ri-award-fill ml-1"></i>
+                                الأكثر تميزاً
+                            </span>
+                            <span class="flex items-center">
+                                <i class="ri-time-line ml-1"></i>
+                                ٤٠ دقيقة
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu Item 6 -->
+                <div class="menu-item bg-gray-900 rounded-lg overflow-hidden group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://readdy.ai/api/search-image?query=Elegant%20Middle%20Eastern%20fusion%20dessert%20featuring%20baklava%20with%20modern%20presentation.%20The%20dessert%20includes%20layers%20of%20filo%20pastry%20with%20pistachios%20and%20honey%2C%20accompanied%20by%20a%20quenelle%20of%20saffron%20ice%20cream%20and%20edible%20gold%20leaf.%20The%20plating%20is%20artistic%20with%20honey%20drizzles%20and%20crushed%20pistachios%2C%20presented%20on%20a%20dark%20plate%20against%20a%20black%20background%20with%20professional%20food%20photography%20lighting.&width=600&height=400&seq=7&orientation=landscape" alt="بقلاوة بالفستق والزعفران" class="w-full h-full object-cover object-top transition-transform duration-500">
+                        <div class="menu-overlay absolute inset-0 bg-black bg-opacity-60 opacity-0 transition-opacity duration-300 flex items-center justify-center">
+                            <button class="bg-primary text-black py-2 px-6 rounded-button font-bold hover:bg-opacity-90 transition-all whitespace-nowrap">احجز هذا الطبق</button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-xl font-bold text-white">بقلاوة بالفستق والزعفران</h3>
+                            <span class="text-primary font-bold">١٨٥ ريال</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">بقلاوة فاخرة محشوة بالفستق الحلبي والمكسرات، مغطاة بشراب الزهر والعسل، تقدم مع آيس كريم الزعفران وكومبوت التوت الطازج.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <span class="flex items-center ml-4">
+                                <i class="ri-leaf-line ml-1"></i>
+                                تراث عصري
+                            </span>
+                            <span class="flex items-center">
+                                <i class="ri-heart-line ml-1"></i>
+                                مفضل الزبائن
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <button class="border-2 border-primary text-primary py-3 px-8 rounded-button text-lg font-bold hover:bg-primary hover:text-black transition-all whitespace-nowrap">عرض القائمة الكاملة</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation Section -->
+    <section id="reservation" class="py-20 bg-gray-950">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="title-font text-4xl md:text-5xl text-white mb-4">احجز <span class="text-primary">تجربتك</span></h2>
+                <p class="text-gray-300 max-w-2xl mx-auto">اختر طاولتك المفضلة واستمتع بتجربة طعام فريدة مصممة خصيصاً لك. يمكنك إضافة تفاصيل خاصة لجعل المناسبة استثنائية.</p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-12">
+                <!-- 3D Map -->
+                <div class="lg:w-1/2 bg-gray-900 rounded-lg p-6 overflow-hidden">
+                    <h3 class="text-xl font-bold text-white mb-4">اختر طاولتك</h3>
+                    <div class="table-map relative h-96 bg-black rounded-lg overflow-hidden" style="background-image: url('https://public.readdy.ai/gen_page/map_placeholder_1280x720.png'); background-size: cover; background-position: center;">
+                        <!-- Table 1 -->
+                        <div class="table absolute top-1/4 left-1/4 w-12 h-12 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center cursor-pointer" data-table="1">
+                            <span class="text-white font-bold">١</span>
+                        </div>
+                        <!-- Table 2 -->
+                        <div class="table absolute top-1/3 left-1/2 w-12 h-12 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center cursor-pointer" data-table="2">
+                            <span class="text-white font-bold">٢</span>
+                        </div>
+                        <!-- Table 3 -->
+                        <div class="table absolute top-2/3 left-1/3 w-12 h-12 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center cursor-pointer" data-table="3">
+                            <span class="text-white font-bold">٣</span>
+                        </div>
+                        <!-- Table 4 -->
+                        <div class="table absolute top-1/2 right-1/4 w-12 h-12 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center cursor-pointer" data-table="4">
+                            <span class="text-white font-bold">٤</span>
+                        </div>
+                        <!-- Table 5 - VIP -->
+                        <div class="table absolute top-1/4 right-1/3 w-16 h-16 rounded-full bg-primary bg-opacity-50 hover:bg-opacity-70 flex items-center justify-center cursor-pointer" data-table="5">
+                            <span class="text-white font-bold">VIP</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex justify-between text-sm text-gray-400">
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 rounded-full bg-gray-700 ml-2"></div>
+                            <span>متاح</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 rounded-full bg-red-700 ml-2"></div>
+                            <span>محجوز</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 rounded-full bg-primary bg-opacity-50 ml-2"></div>
+                            <span>VIP</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 rounded-full bg-green-700 ml-2"></div>
+                            <span>اختيارك</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Reservation Form -->
+                <div class="lg:w-1/2 bg-gray-900 rounded-lg p-6">
+                    <h3 class="text-xl font-bold text-white mb-4">تفاصيل الحجز</h3>
+                    <form id="reservationForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-300 mb-2">الاسم</label>
+                                <input type="text" class="w-full bg-gray-800 border border-gray-700 rounded text-white px-4 py-3 focus:outline-none focus:border-primary" placeholder="الاسم الكامل">
+                            </div>
+                            <div>
+                                <label class="block text-gray-300 mb-2">رقم الهاتف</label>
+                                <input type="tel" class="w-full bg-gray-800 border border-gray-700 rounded text-white px-4 py-3 focus:outline-none focus:border-primary" placeholder="05xxxxxxxx">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-300 mb-2">التاريخ</label>
+                                <input type="date" class="w-full bg-gray-800 border border-gray-700 rounded text-white px-4 py-3 focus:outline-none focus:border-primary">
+                            </div>
+                            <div>
+                                <label class="block text-gray-300 mb-2">الوقت</label>
+                                <input type="time" class="w-full bg-gray-800 border border-gray-700 rounded text-white px-4 py-3 focus:outline-none focus:border-primary">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-300 mb-2">عدد الضيوف</label>
+                            <div class="flex items-center">
+                                <button type="button" id="decreaseGuests" class="bg-gray-800 text-white w-10 h-10 rounded-l flex items-center justify-center border border-gray-700">
+                                    <i class="ri-subtract-line"></i>
+                                </button>
+                                <input type="text" id="guestsCount" value="2" class="w-16 bg-gray-800 border-t border-b border-gray-700 text-white text-center py-2" readonly>
+                                <button type="button" id="increaseGuests" class="bg-gray-800 text-white w-10 h-10 rounded-r flex items-center justify-center border border-gray-700">
+                                    <i class="ri-add-line"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-300 mb-2">الطاولة المختارة</label>
+                            <div class="bg-gray-800 border border-gray-700 rounded px-4 py-3 text-white">
+                                <span id="selectedTable">لم يتم الاختيار بعد</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-300 mb-4">إضافات خاصة</label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <label class="custom-checkbox flex items-center">
+                                    <input type="checkbox" name="special" value="candles">
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-300">شموع رومانسية</span>
+                                </label>
+                                <label class="custom-checkbox flex items-center">
+                                    <input type="checkbox" name="special" value="flowers">
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-300">باقة ورد</span>
+                                </label>
+                                <label class="custom-checkbox flex items-center">
+                                    <input type="checkbox" name="special" value="cake">
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-300">كيكة مناسبات</span>
+                                </label>
+                                <label class="custom-checkbox flex items-center">
+                                    <input type="checkbox" name="special" value="champagne">
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-300">مشروب ترحيبي</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-300 mb-2">ملاحظات إضافية</label>
+                            <textarea class="w-full bg-gray-800 border border-gray-700 rounded text-white px-4 py-3 focus:outline-none focus:border-primary h-24" placeholder="أي تفاصيل خاصة تود إضافتها..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-primary text-black py-3 px-8 rounded-button text-lg font-bold hover:bg-opacity-90 transition-all whitespace-nowrap">تأكيد الحجز</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 bg-black">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="title-font text-4xl md:text-5xl text-white mb-4">معرض <span class="text-primary">الصور</span></h2>
+                <p class="text-gray-300 max-w-2xl mx-auto">استكشف رحلة بصرية عبر أطباقنا المميزة وأجواء المطعم الفاخرة. كل صورة تحكي قصة وتثير الحواس.</p>
+            </div>
+
+            <div class="relative overflow-x-auto pb-8">
+                <div class="flex space-x-6 space-x-reverse w-max">
+                    <!-- Gallery Item 1 -->
+                    <div class="gallery-item w-80 flex-shrink-0 relative group">
+                        <img src="https://readdy.ai/api/search-image?query=Luxurious%20restaurant%20interior%20with%20elegant%20table%20settings%2C%20warm%20ambient%20lighting%2C%20and%20sophisticated%20decor.%20The%20space%20features%20rich%20textures%2C%20dark%20wood%20elements%2C%20and%20golden%20accents.%20The%20atmosphere%20is%20intimate%20and%20exclusive%2C%20with%20soft%20lighting%20highlighting%20the%20elegant%20table%20arrangements%20and%20architectural%20details.&width=500&height=700&seq=8&orientation=portrait" alt="أجواء المطعم" class="w-full h-96 object-cover object-top rounded-lg">
+                        <div class="gallery-overlay absolute inset-0 bg-black bg-opacity-70 opacity-0 transition-opacity duration-300 rounded-lg flex flex-col items-center justify-center p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">أجواء المطعم</h3>
+                            <p class="text-gray-300 text-center text-sm">تصميم داخلي فاخر يجمع بين الأناقة والدفء، مع إضاءة خافتة تخلق أجواءً حميمية.</p>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 2 -->
+                    <div class="gallery-item w-80 flex-shrink-0 relative group">
+                        <img src="https://readdy.ai/api/search-image?query=Close-up%20of%20a%20chefs%20hands%20preparing%20an%20elegant%20dish%20with%20tweezers%2C%20placing%20microgreens%20on%20a%20beautifully%20plated%20creation.%20The%20image%20captures%20the%20precision%20and%20artistry%20of%20fine%20dining%20preparation%2C%20with%20dramatic%20lighting%20highlighting%20the%20chefs%20technique%20and%20the%20vibrant%20colors%20of%20the%20dish%20against%20a%20dark%20background.&width=500&height=700&seq=9&orientation=portrait" alt="فن الطهي" class="w-full h-96 object-cover object-top rounded-lg">
+                        <div class="gallery-overlay absolute inset-0 bg-black bg-opacity-70 opacity-0 transition-opacity duration-300 rounded-lg flex flex-col items-center justify-center p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">فن الطهي</h3>
+                            <p class="text-gray-300 text-center text-sm">لحظات من الإبداع في مطبخنا، حيث يتحول الطعام إلى عمل فني متقن بأيدي طهاة محترفين.</p>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 3 -->
+                    <div class="gallery-item w-80 flex-shrink-0 relative group">
+                        <img src="https://readdy.ai/api/search-image?query=Artistic%20presentation%20of%20a%20signature%20cocktail%20in%20a%20crystal%20glass%20with%20smoke%20effects%20and%20exotic%20garnishes.%20The%20drink%20features%20layers%20of%20colors%20with%20gold%20leaf%20accents.%20The%20image%20is%20captured%20with%20dramatic%20lighting%20against%20a%20dark%20background%2C%20highlighting%20the%20luxurious%20nature%20of%20the%20beverage%20and%20its%20artistic%20presentation.&width=500&height=700&seq=10&orientation=portrait" alt="مشروبات مبتكرة" class="w-full h-96 object-cover object-top rounded-lg">
+                        <div class="gallery-overlay absolute inset-0 bg-black bg-opacity-70 opacity-0 transition-opacity duration-300 rounded-lg flex flex-col items-center justify-center p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">مشروبات مبتكرة</h3>
+                            <p class="text-gray-300 text-center text-sm">كوكتيلات فريدة مصممة بعناية، تمزج بين النكهات الغريبة والتقديم المسرحي لتجربة لا تُنسى.</p>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 4 -->
+                    <div class="gallery-item w-80 flex-shrink-0 relative group">
+                        <img src="https://readdy.ai/api/search-image?query=Elegant%20dessert%20presentation%20featuring%20a%20deconstructed%20chocolate%20creation%20with%20multiple%20textures%20and%20artistic%20elements.%20The%20dessert%20includes%20quenelles%20of%20mousse%2C%20crisp%20tuiles%2C%20edible%20flowers%2C%20and%20delicate%20sauce%20patterns.%20The%20composition%20is%20captured%20with%20professional%20food%20photography%20lighting%20against%20a%20dark%20background%2C%20highlighting%20the%20desserts%20sophisticated%20design.&width=500&height=700&seq=11&orientation=portrait" alt="إبداعات الحلويات" class="w-full h-96 object-cover object-top rounded-lg">
+                        <div class="gallery-overlay absolute inset-0 bg-black bg-opacity-70 opacity-0 transition-opacity duration-300 rounded-lg flex flex-col items-center justify-center p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">إبداعات الحلويات</h3>
+                            <p class="text-gray-300 text-center text-sm">حلويات فنية تجمع بين الجمال والمذاق، مع تركيز على التفاصيل الدقيقة والتوازن المثالي للنكهات.</p>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 5 -->
+                    <div class="gallery-item w-80 flex-shrink-0 relative group">
+                        <img src="https://readdy.ai/api/search-image?query=Close-up%20of%20exotic%20spices%20and%20premium%20ingredients%20arranged%20artistically.%20The%20image%20features%20vibrant%20colors%20of%20saffron%20threads%2C%20star%20anise%2C%20cardamom%20pods%2C%20and%20rare%20herbs.%20The%20composition%20is%20captured%20with%20dramatic%20lighting%20against%20a%20dark%20wooden%20surface%2C%20highlighting%20the%20textures%20and%20colors%20of%20these%20culinary%20treasures.&width=500&height=700&seq=12&orientation=portrait" alt="مكونات فاخرة" class="w-full h-96 object-cover object-top rounded-lg">
+                        <div class="gallery-overlay absolute inset-0 bg-black bg-opacity-70 opacity-0 transition-opacity duration-300 rounded-lg flex flex-col items-center justify-center p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">مكونات فاخرة</h3>
+                            <p class="text-gray-300 text-center text-sm">نختار أجود المكونات من جميع أنحاء العالم، من التوابل النادرة إلى المنتجات الموسمية الطازجة.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center mt-8">
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="w-3 h-3 rounded-full bg-primary"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-700"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-700"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-700"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section id="story" class="py-20 bg-gray-950">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="title-font text-4xl md:text-5xl text-white mb-4">قصة <span class="text-primary">المطعم</span></h2>
+                <p class="text-gray-300 max-w-2xl mx-auto">تعرف على رحلتنا في عالم الطهي، من البدايات المتواضعة إلى تجربة الطعام الفاخرة التي نقدمها اليوم.</p>
+            </div>
+
+            <div class="flex justify-center">
+                <div class="relative w-full max-w-4xl">
+                    <!-- Book Pages -->
+                    <div class="book-container relative h-[600px] perspective-1000">
+                        <!-- Page 1 -->
+                        <div class="book-page absolute inset-0 bg-gray-900 rounded-lg p-8 flex flex-col">
+                            <h3 class="text-2xl font-bold text-primary mb-6">البدايات</h3>
+                            <div class="flex flex-col md:flex-row gap-8">
+                                <div class="md:w-1/2">
+                                    <p class="text-gray-300 mb-4">بدأت رحلتنا في عام ٢٠١٠ عندما قرر الشيف عبدالرحمن الحارثي تحويل شغفه بالطهي إلى تجربة فريدة يشاركها مع العالم.</p>
+                                    <p class="text-gray-300 mb-4">بعد سنوات من التدريب في أرقى المطاعم العالمية في باريس وطوكيو ونيويورك، عاد إلى وطنه ليؤسس مطعماً يجمع بين التقنيات العالمية والنكهات المحلية الأصيلة.</p>
+                                    <p class="text-gray-300">كانت الرؤية واضحة: خلق مساحة لا تقدم الطعام فقط، بل تقدم رحلة حسية متكاملة تخاطب جميع الحواس وتترك ذكرى لا تُنسى.</p>
+                                </div>
+                                <div class="md:w-1/2">
+                                    <img src="https://readdy.ai/api/search-image?query=Portrait%20of%20a%20Middle%20Eastern%20chef%20in%20professional%20white%20uniform%20working%20in%20a%20luxury%20kitchen.%20The%20image%20shows%20him%20carefully%20preparing%20food%20with%20concentration%20and%20passion.%20The%20lighting%20is%20dramatic%2C%20highlighting%20his%20focused%20expression%20against%20the%20background%20of%20a%20professional%20kitchen.&width=500&height=400&seq=13&orientation=landscape" alt="الشيف عبدالرحمن الحارثي" class="w-full h-64 object-cover object-top rounded-lg mb-4">
+                                    <p class="text-sm text-gray-400 text-center">الشيف عبدالرحمن الحارثي - المؤسس والشيف التنفيذي</p>
+                                </div>
+                            </div>
+                            <div class="mt-auto flex justify-end">
+                                <button class="turn-page-btn flex items-center text-primary hover:text-white transition-colors">
+                                    <span>الصفحة التالية</span>
+                                    <i class="ri-arrow-left-line mr-2"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Page 2 -->
+                        <div class="book-page absolute inset-0 bg-gray-900 rounded-lg p-8 flex flex-col hidden">
+                            <h3 class="text-2xl font-bold text-primary mb-6">فلسفتنا</h3>
+                            <div class="flex flex-col md:flex-row gap-8">
+                                <div class="md:w-1/2">
+                                    <img src="https://readdy.ai/api/search-image?query=Chefs%20working%20together%20in%20a%20luxury%20restaurant%20kitchen%2C%20focusing%20on%20plating%20elegant%20dishes.%20The%20image%20shows%20multiple%20chefs%20in%20white%20uniforms%20collaborating%20with%20precision%20and%20artistry.%20The%20kitchen%20is%20modern%20with%20stainless%20steel%20elements%2C%20and%20the%20lighting%20highlights%20the%20teamwork%20and%20craftsmanship%20involved%20in%20high-end%20culinary%20creation.&width=500&height=400&seq=14&orientation=landscape" alt="فريق الطهاة" class="w-full h-64 object-cover object-top rounded-lg mb-4">
+                                    <p class="text-sm text-gray-400 text-center">فريقنا من الطهاة المحترفين أثناء تحضير الأطباق</p>
+                                </div>
+                                <div class="md:w-1/2">
+                                    <p class="text-gray-300 mb-4">نؤمن بأن الطعام الحقيقي هو ذلك الذي يروي قصة ويخلق ذكرى. لذلك نحرص على انتقاء أفضل المكونات الموسمية من مصادر مستدامة.</p>
+                                    <p class="text-gray-300 mb-4">يتكون فريقنا من طهاة شغوفين من مختلف أنحاء العالم، يجمعهم حب الابتكار واحترام التقاليد الطهوية العريقة.</p>
+                                    <p class="text-gray-300">كل طبق نقدمه هو نتاج رحلة بحث وتجريب وإبداع، نسعى من خلالها لتقديم تجربة طعام لا مثيل لها.</p>
+                                </div>
+                            </div>
+                            <div class="mt-auto flex justify-between">
+                                <button class="turn-page-back-btn flex items-center text-primary hover:text-white transition-colors">
+                                    <i class="ri-arrow-right-line ml-2"></i>
+                                    <span>الصفحة السابقة</span>
+                                </button>
+                                <button class="turn-page-btn flex items-center text-primary hover:text-white transition-colors">
+                                    <span>الصفحة التالية</span>
+                                    <i class="ri-arrow-left-line mr-2"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Page 3 -->
+                        <div class="book-page absolute inset-0 bg-gray-900 rounded-lg p-8 flex flex-col hidden">
+                            <h3 class="text-2xl font-bold text-primary mb-6">مصادر مكوناتنا</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-gray-800 rounded-lg p-4 flex flex-col items-center">
+                                    <img src="https://readdy.ai/api/search-image?query=Close-up%20of%20fresh%20organic%20vegetables%20and%20herbs%20from%20a%20local%20farm%2C%20arranged%20beautifully.%20The%20image%20shows%20vibrant%20colors%20of%20heirloom%20tomatoes%2C%20leafy%20greens%2C%20and%20aromatic%20herbs.%20The%20lighting%20is%20natural%20and%20highlights%20the%20freshness%20and%20quality%20of%20these%20locally-sourced%20ingredients.&width=300&height=200&seq=15&orientation=landscape" alt="المزارع المحلية" class="w-full h-40 object-cover object-top rounded-lg mb-3">
+                                    <h4 class="text-white font-bold mb-2">المزارع المحلية</h4>
+                                    <p class="text-gray-400 text-sm text-center">نتعاون مع المزارعين المحليين للحصول على أطيب الخضروات والفواكه الموسمية الطازجة.</p>
+                                </div>
+                                <div class="bg-gray-800 rounded-lg p-4 flex flex-col items-center">
+                                    <img src="https://readdy.ai/api/search-image?query=Close-up%20of%20premium%20seafood%20on%20ice%2C%20including%20fresh%20fish%2C%20shellfish%2C%20and%20crustaceans.%20The%20image%20shows%20the%20glistening%2C%20fresh%20quality%20of%20the%20seafood%20with%20water%20droplets%20visible.%20The%20lighting%20highlights%20the%20natural%20colors%20and%20textures%20of%20these%20ocean%20treasures.&width=300&height=200&seq=16&orientation=landscape" alt="الصيد البحري" class="w-full h-40 object-cover object-top rounded-lg mb-3">
+                                    <h4 class="text-white font-bold mb-2">الصيد البحري</h4>
+                                    <p class="text-gray-400 text-sm text-center">نحصل على المأكولات البحرية الطازجة يومياً من صيادين محليين يتبعون ممارسات صيد مستدامة.</p>
+                                </div>
+                                <div class="bg-gray-800 rounded-lg p-4 flex flex-col items-center">
+                                    <img src="https://readdy.ai/api/search-image?query=Close-up%20of%20exotic%20spices%20in%20wooden%20bowls%2C%20including%20saffron%2C%20cardamom%2C%20star%20anise%2C%20and%20rare%20peppers.%20The%20image%20shows%20the%20vibrant%20colors%20and%20textures%20of%20these%20premium%20spices%20imported%20from%20around%20the%20world.%20The%20lighting%20highlights%20the%20rich%20colors%20against%20natural%20wooden%20surfaces.&width=300&height=200&seq=17&orientation=landscape" alt="التوابل العالمية" class="w-full h-40 object-cover object-top rounded-lg mb-3">
+                                    <h4 class="text-white font-bold mb-2">التوابل العالمية</h4>
+                                    <p class="text-gray-400 text-sm text-center">نستورد أجود أنواع التوابل والبهارات من مختلف أنحاء العالم لإضفاء نكهات فريدة على أطباقنا.</p>
+                                </div>
+                                <div class="bg-gray-800 rounded-lg p-4 flex flex-col items-center">
+                                    <img src="https://readdy.ai/api/search-image?query=Close-up%20of%20artisanal%20bread%20and%20pastries%20freshly%20baked%20in%20a%20traditional%20stone%20oven.%20The%20image%20shows%20a%20variety%20of%20rustic%20breads%20with%20perfect%20crusts%20and%20textures.%20The%20lighting%20highlights%20the%20golden%20brown%20colors%20and%20artisanal%20quality%20of%20these%20freshly%20baked%20goods.&width=300&height=200&seq=18&orientation=landscape" alt="المخبوزات الطازجة" class="w-full h-40 object-cover object-top rounded-lg mb-3">
+                                    <h4 class="text-white font-bold mb-2">المخبوزات الطازجة</h4>
+                                    <p class="text-gray-400 text-sm text-center">نخبز جميع أنواع الخبز والمعجنات يومياً في مخبزنا الخاص باستخدام تقنيات تقليدية.</p>
+                                </div>
+                            </div>
+                            <div class="mt-auto flex justify-between">
+                                <button class="turn-page-back-btn flex items-center text-primary hover:text-white transition-colors">
+                                    <i class="ri-arrow-right-line ml-2"></i>
+                                    <span>الصفحة السابقة</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-black">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="title-font text-4xl md:text-5xl text-white mb-4">آراء <span class="text-primary">الضيوف</span></h2>
+                <p class="text-gray-300 max-w-2xl mx-auto">استمع إلى تجارب ضيوفنا الذين شاركونا رحلتهم الحسية في مطعمنا.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-gray-900 rounded-lg p-6 border-t-4 border-primary">
+                    <div class="flex items-center mb-4">
+                        <div class="text-primary">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6">"تجربة لا تُنسى من اللحظة الأولى. الأطباق ليست مجرد طعام، بل لوحات فنية تخاطب جميع الحواس. الخدمة استثنائية والأجواء ساحرة. سأعود مراراً وتكراراً."</p>
+                    <div class="flex items-center">
+                        <div class="ml-4">
+                            <h4 class="text-white font-bold">سارة المنصور</h4>
+                            <p class="text-gray-500 text-sm">ناقدة طعام</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-gray-900 rounded-lg p-6 border-t-4 border-primary">
+                    <div class="flex items-center mb-4">
+                        <div class="text-primary">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6">"احتفلنا بذكرى زواجنا العاشرة هنا، وكانت التجربة أكثر من رائعة. الاهتمام بالتفاصيل الصغيرة والنكهات المتناغمة جعلت هذه المناسبة لا تُنسى. شكراً لفريق المطعم المتميز."</p>
+                    <div class="flex items-center">
+                        <div class="ml-4">
+                            <h4 class="text-white font-bold">فهد العتيبي</h4>
+                            <p class="text-gray-500 text-sm">رجل أعمال</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-gray-900 rounded-lg p-6 border-t-4 border-primary">
+                    <div class="flex items-center mb-4">
+                        <div class="text-primary">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6">"كخبير في مجال الطهي، أقدر حقاً المستوى الاستثنائي من الإبداع والتقنية في كل طبق. المكونات فائقة الجودة والتقديم مبهر. بلا شك أحد أفضل المطاعم التي زرتها على الإطلاق."</p>
+                    <div class="flex items-center">
+                        <div class="ml-4">
+                            <h4 class="text-white font-bold">نوف الشمري</h4>
+                            <p class="text-gray-500 text-sm">شيف ومؤلفة كتب طبخ</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-20 bg-gray-950">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto bg-gray-900 rounded-lg p-8 md:p-12">
+                <div class="text-center mb-8">
+                    <h2 class="title-font text-3xl md:text-4xl text-white mb-4">ابق على <span class="text-primary">تواصل</span></h2>
+                    <p class="text-gray-300">اشترك في نشرتنا البريدية للحصول على آخر الأخبار والعروض الخاصة والدعوات الحصرية.</p>
+                </div>
+                <form class="flex flex-col md:flex-row gap-4">
+                    <input type="email" placeholder="بريدك الإلكتروني" class="flex-grow bg-gray-800 border border-gray-700 rounded text-white px-4 py-3 focus:outline-none focus:border-primary">
+                    <button type="submit" class="bg-primary text-black py-3 px-8 rounded-button font-bold hover:bg-opacity-90 transition-all whitespace-nowrap">اشترك الآن</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <a href="#" class="font-['Pacifico'] text-primary text-3xl block mb-4">logo</a>
+                    <p class="text-gray-400 mb-6">رحلة حسية عبر عالم الطهي الفاخر، نقدم تجربة طعام فريدة تخاطب جميع الحواس.</p>
+                    <div class="flex space-x-4 space-x-reverse">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-white hover:bg-primary hover:text-black transition-colors">
+                            <i class="ri-instagram-line"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-white hover:bg-primary hover:text-black transition-colors">
+                            <i class="ri-twitter-x-line"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-white hover:bg-primary hover:text-black transition-colors">
+                            <i class="ri-facebook-fill"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-white hover:bg-primary hover:text-black transition-colors">
+                            <i class="ri-snapchat-fill"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-bold text-xl mb-4">ساعات العمل</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex justify-between">
+                            <span>الأحد - الأربعاء</span>
+                            <span>١٢ ظهراً - ١١ مساءً</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>الخميس</span>
+                            <span>١٢ ظهراً - ١٢ ليلاً</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>الجمعة - السبت</span>
+                            <span>١ ظهراً - ١ صباحاً</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-bold text-xl mb-4">تواصل معنا</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="ri-map-pin-line mt-1 ml-2"></i>
+                            <span>حي السفارات، طريق الأمير تركي، الرياض، المملكة العربية السعودية</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="ri-phone-line ml-2"></i>
+                            <span>+966 11 234 5678</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="ri-mail-line ml-2"></i>
+                            <span>info@sensoryvoyage.com</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-bold text-xl mb-4">روابط سريعة</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#menu" class="hover:text-primary transition-colors">القائمة</a></li>
+                        <li><a href="#reservation" class="hover:text-primary transition-colors">الحجز</a></li>
+                        <li><a href="#gallery" class="hover:text-primary transition-colors">معرض الصور</a></li>
+                        <li><a href="#story" class="hover:text-primary transition-colors">قصتنا</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">سياسة الخصوصية</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">© ٢٠٢٥ رحلة حسية. جميع الحقوق محفوظة.</p>
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <span class="text-gray-500 text-sm">وسائل الدفع المقبولة:</span>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <i class="ri-visa-fill text-gray-400 ri-lg"></i>
+                        <i class="ri-mastercard-fill text-gray-400 ri-lg"></i>
+                        <i class="ri-apple-fill text-gray-400 ri-lg"></i>
+                        <i class="ri-paypal-fill text-gray-400 ri-lg"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Intro Animation
+            const introOverlay = document.getElementById('introOverlay');
+            const startJourneyBtn = document.getElementById('startJourneyBtn');
+            const musicToggle = document.getElementById('musicToggle');
+            const backgroundMusic = document.getElementById('backgroundMusic');
+            startJourneyBtn.addEventListener('click', function() {
+                introOverlay.classList.add('opacity-0', 'pointer-events-none');
+                introOverlay.style.transition = 'opacity 1s ease';
+                setTimeout(() => {
+                    introOverlay.style.display = 'none';
+                }, 1000);
+            });
+
+            musicToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    backgroundMusic.play();
+                } else {
+                    backgroundMusic.pause();
+                }
+            });
+
+            // Mobile Menu
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const closeMenuBtn = document.getElementById('closeMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+            });
+
+            closeMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.remove('flex');
+                mobileMenu.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            });
+
+            // Table Selection
+            const tables = document.querySelectorAll('.table');
+            const selectedTableEl = document.getElementById('selectedTable');
+            tables.forEach(table => {
+                table.addEventListener('click', function() {
+                    // Remove selected class from all tables
+                    tables.forEach(t => t.classList.remove('selected'));
+                    
+                    // Add selected class to clicked table
+                    this.classList.add('selected');
+                    
+                    // Update selected table text
+                    const tableNumber = this.dataset.table;
+                    if (tableNumber === '5') {
+                        selectedTableEl.textContent = 'طاولة VIP';
+                    } else {
+                        selectedTableEl.textContent = 'طاولة رقم ' + tableNumber;
+                    }
+                });
+            });
+
+            // Guest Count
+            const decreaseBtn = document.getElementById('decreaseGuests');
+            const increaseBtn = document.getElementById('increaseGuests');
+            const guestsCount = document.getElementById('guestsCount');
+
+            decreaseBtn.addEventListener('click', function() {
+                let count = parseInt(guestsCount.value);
+                if (count > 1) {
+                    guestsCount.value = count - 1;
+                }
+            });
+
+            increaseBtn.addEventListener('click', function() {
+                let count = parseInt(guestsCount.value);
+                if (count < 10) {
+                    guestsCount.value = count + 1;
+                }
+            });
+
+            // Story Book Pages
+            const turnPageBtns = document.querySelectorAll('.turn-page-btn');
+            const turnPageBackBtns = document.querySelectorAll('.turn-page-back-btn');
+            const bookPages = document.querySelectorAll('.book-page');
+
+            turnPageBtns.forEach((btn, index) => {
+                btn.addEventListener('click', function() {
+                    if (index < bookPages.length - 1) {
+                        bookPages[index].classList.add('page-turn');
+                        setTimeout(() => {
+                            bookPages[index].classList.add('hidden');
+                            bookPages[index + 1].classList.remove('hidden');
+                        }, 300);
+                    }
+                });
+            });
+
+            turnPageBackBtns.forEach((btn, index) => {
+                btn.addEventListener('click', function() {
+                    const currentPageIndex = index + 1;
+                    if (currentPageIndex > 0) {
+                        bookPages[currentPageIndex].classList.add('hidden');
+                        bookPages[currentPageIndex - 1].classList.remove('hidden');
+                        bookPages[currentPageIndex - 1].classList.remove('page-turn');
+                    }
+                });
+            });
+
+            // Menu Categories
+            const menuCategoryBtns = document.querySelectorAll('.menu-category-btn');
+            
+            menuCategoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    menuCategoryBtns.forEach(b => {
+                        b.classList.remove('bg-primary', 'text-black');
+                        b.classList.add('text-white', 'hover:bg-gray-800');
+                    });
+                    
+                    this.classList.remove('text-white', 'hover:bg-gray-800');
+                    this.classList.add('bg-primary', 'text-black');
+                });
+            });
+
+            // Smooth Scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    // Close mobile menu if open
+                    if (mobileMenu.classList.contains('flex')) {
+                        mobileMenu.classList.remove('flex');
+                        mobileMenu.classList.add('hidden');
+                        document.body.style.overflow = 'auto';
+                    }
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Reserve Now Button
+            const reserveNowBtn = document.getElementById('reserveNowBtn');
+            
+            reserveNowBtn.addEventListener('click', function() {
+                const reservationSection = document.getElementById('reservation');
+                
+                window.scrollTo({
+                    top: reservationSection.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Navigation Active State
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            window.addEventListener('scroll', function() {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    
+                    if (pageYOffset >= sectionTop - 200) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
